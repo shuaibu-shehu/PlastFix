@@ -3,9 +3,25 @@
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
 
 import {WasteDistribution} from '@/components/dashboard/waste-distribution';
-import Newsfeed from '@/components/caresoul/newfeed';
-
+import DailyOverview from '@/components/dashboard/daily-overview';
+import { Button } from '@/components/ui/button';
+import { Plus } from 'lucide-react';
+import PlasticLoggerDialog from '@/components/plasticlogger';
+import { PlasticItem } from '@/lib/types';
+import { addItem } from '@/lib/actions/actions';
+import { useModal } from '@/hooks/modal-store';
+import { useSession } from 'next-auth/react';
 export default function DashboardPage() {
+  const { onOpen } = useModal()
+  const user = useSession().data?.user
+  const handleSubmit =async (item: PlasticItem[]) => {
+    // Handle the submitted items here
+    console.log('user :', user);
+    
+    console.log('Logged items:', item);
+    await addItem(item, user?.email);
+  };
+
   return (
     <div className='space-y-6'>
       <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
@@ -62,6 +78,15 @@ export default function DashboardPage() {
             <CardTitle>Todays Plastic usage</CardTitle>
           </CardHeader>
           <CardContent>
+            <PlasticLoggerDialog
+              trigger={<Button className=' float-end' variant="default"><Plus/></Button>}
+              onSubmit={handleSubmit}
+              />
+            {/* <Button
+              onClick={() => {
+                  onOpen("logItem")
+              }}
+              className=' float-end' variant="default"><Plus /></Button> */}
             <WasteDistribution />
           </CardContent>
         </Card>
