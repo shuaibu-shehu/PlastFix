@@ -1,19 +1,14 @@
-import Link from 'next/link';
-import {Button} from '@/components/ui/button';
-import Image from 'next/image';
+import Link from 'next/link'
+import { Button } from "@/components/ui/button"
 
 export default function LandingPage() {
   return (
-    <div className='min-h-screen bg-gradient-to-b from-green-100 to-green-200'>
-      <header className='p-5 bg-green-600 text-white'>
-        <nav className='container mx-auto flex justify-between items-center'>
-          <h1 className='text-2xl font-bold'>EcoTrack</h1>
-          <Link href='/login'>
-            <Button
-              variant='outline'
-              className='text-white border-white hover:bg-green-700'>
-              Login
-            </Button>
+    <div className="min-h-screen bg-gradient-to-b from-green-100 to-green-200">
+      <header className="p-5 bg-green-600 text-white">
+        <nav className="container mx-auto flex justify-between items-center">
+          <h1 className="text-2xl font-bold">EcoTrack</h1>
+          <Link href="/login">
+            <Button variant="outline" className="text-gray-800 border-white hover:bg-green-700">Login</Button>
           </Link>
         </nav>
       </header>
