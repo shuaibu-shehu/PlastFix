@@ -1,4 +1,6 @@
-import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
+'use client'
+
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {Overview} from '@/components/dashboard/overview';
 import {RecentActivity} from '@/components/dashboard/recent-activity';
 import {WasteDistribution} from '@/components/dashboard/waste-distribution';

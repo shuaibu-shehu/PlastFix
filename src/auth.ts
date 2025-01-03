@@ -1,5 +1,6 @@
 import NextAuth, { Session } from "next-auth"
 import authConfig from "./auth.config"
+import { db } from "./lib/prisma";
 
 export interface EnrichedSession extends Session {
     accessToken: string;
@@ -10,6 +11,35 @@ export interface EnrichedSession extends Session {
 
 export const { handlers: { GET, POST }, auth, signIn, signOut } = NextAuth({
     callbacks: {
+
+        async signIn({ user, account }) {
+
+            // Allow OAuth or credentials-based login
+
+            if (account?.provider !== "credentials") {
+                // Access the user's email
+                console.log(user);
+
+                const userEmail = user?.email; // Assuming user object has an email property
+                console.log("User email:", userEmail); // You can log or use the email as needed
+                if (userEmail) {
+                    const existingUser = await db.user.findUnique({
+                        where: { email: userEmail }
+                    });
+                    if (!existingUser) {
+                        await db.user.create({
+                            data: {
+                                email: user.email!,
+                                name: user.name!,
+                                image: user.image!,
+                            }
+                        });
+                    }
+                }
+            }
+            
+            return true;
+        },
         async jwt({ token, user, account }) {
 
             //initial sign in
