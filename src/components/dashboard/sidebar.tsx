@@ -14,10 +14,10 @@ import {
 } from 'lucide-react';
 
 const links = [
-  {name: 'Dashboard', href: '/', icon: LayoutDashboard},
+  {name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard},
   {name: 'Log Usage', href: '/log', icon: Plus},
-  {name: 'Reports', href: '/reports', icon: BarChart3},
-  {name: 'Resources', href: '/resources', icon: BookOpen},
+  {name: 'Reports', href: '/dashboard/reports', icon: BarChart3},
+  {name: 'Resources', href: '/dashboard/resource', icon: BookOpen},
   {name: 'Tips', href: '/tips', icon: Leaf},
 ];
 
