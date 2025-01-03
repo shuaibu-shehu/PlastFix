@@ -10,6 +10,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import PlasticLoggerDialog from '../plasticlogger';
+import {PlasticItem} from '@/lib/types';
+
+const handleSubmit = (items: PlasticItem[]) => {
+  // Handle the submitted items here
+  console.log('Logged items:', items);
+};
 
 export function Header() {
   return (
@@ -32,7 +39,10 @@ export function Header() {
               <DropdownMenuItem>Weekly report ready</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button variant='default'>Log Plastic Usage</Button>
+          <PlasticLoggerDialog
+            trigger={<Button variant='default'>Log Plastic Usage</Button>}
+            onSubmit={handleSubmit}
+          />
         </div>
       </div>
     </header>

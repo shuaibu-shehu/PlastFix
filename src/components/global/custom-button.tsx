@@ -16,7 +16,7 @@ function CustomeButton({
     onClick
 }: CustomeButtonProps) {
   return (
-      <Button type={type} disabled={isLoading} onClick={onClick} className=' bg-custome-green-300 hover:bg-custome-green-300 felx gap-2'>
+      <Button type={type} disabled={isLoading} onClick={onClick} className=' bg-green-600 hover:bg-custome-green-300 felx gap-2'>
           {children}
           {isLoading && <Loader2 size={20} className='animate-spin text-gray-300' />}
       </Button>
