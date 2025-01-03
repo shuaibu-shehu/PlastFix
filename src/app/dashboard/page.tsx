@@ -5,6 +5,7 @@ import {Overview} from '@/components/dashboard/overview';
 import {RecentActivity} from '@/components/dashboard/recent-activity';
 import {WasteDistribution} from '@/components/dashboard/waste-distribution';
 import {ImpactMetrics} from '@/components/dashboard/impact-metrics';
+import DailyOverview from '@/components/dashboard/daily-overview';
 
 export default function DashboardPage() {
   return (
@@ -57,42 +58,7 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
       </div>
-      <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-7'>
-        <Card className='col-span-5'>
-          <CardHeader>
-            <CardTitle>Weekly Overview</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Overview />
-          </CardContent>
-        </Card>
-        <Card className='col-span-2'>
-          <CardHeader>
-            <CardTitle>Waste Distribution</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <WasteDistribution />
-          </CardContent>
-        </Card>
-      </div>
-      <div className='grid gap-4 md:grid-cols-2'>
-        <Card>
-          <CardHeader>
-            <CardTitle>Recent Activity</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <RecentActivity />
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Impact Metrics</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ImpactMetrics />
-          </CardContent>
-        </Card>
-      </div>
+      {/* <DailyOverview/> */}
     </div>
   );
 }
