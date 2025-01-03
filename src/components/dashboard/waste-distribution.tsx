@@ -17,9 +17,9 @@ export function WasteDistribution() {
             data={data}
             cx='50%'
             cy='50%'
-            innerRadius={60}
+            innerRadius={0}
             outerRadius={80}
-            paddingAngle={2}
+            paddingAngle={0}
             dataKey='value'>
             {data.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={entry.color} />

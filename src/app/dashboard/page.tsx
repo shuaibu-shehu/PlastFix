@@ -56,7 +56,7 @@ export default function DashboardPage() {
         </Card>
       </div>
       <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-7'>
-        <Card className='col-span-4'>
+        <Card className='col-span-5'>
           <CardHeader>
             <CardTitle>Weekly Overview</CardTitle>
           </CardHeader>
@@ -64,7 +64,7 @@ export default function DashboardPage() {
             <Overview />
           </CardContent>
         </Card>
-        <Card className='col-span-3'>
+        <Card className='col-span-2'>
           <CardHeader>
             <CardTitle>Waste Distribution</CardTitle>
           </CardHeader>
