@@ -14,3 +14,20 @@ export const addLogItemSchema = z.object({
         required_error: "Category is required",
     }),
 });
+export interface PlasticItem {
+  name: string;
+  quantity: string;
+  weight: string;
+    type: 'SINGLE_USE' | 'RECYCLABLE' | 'NON_RECYCLABLE';
+}
+
+export interface PlasticType {
+  id: PlasticItem['type'];
+  label: string;
+  color: string;
+}
+
+export interface PlasticLoggerDialogProps {
+  trigger: React.ReactNode;
+  onSubmit?: (items: PlasticItem[]) => void;
+}

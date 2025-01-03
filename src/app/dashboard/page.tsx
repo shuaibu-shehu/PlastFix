@@ -2,12 +2,27 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {Overview} from '@/components/dashboard/overview';
-import {RecentActivity} from '@/components/dashboard/recent-activity';
-import {WasteDistribution} from '@/components/dashboard/waste-distribution';
-import {ImpactMetrics} from '@/components/dashboard/impact-metrics';
-import DailyOverview from '@/components/dashboard/daily-overview';
 
+import {WasteDistribution} from '@/components/dashboard/waste-distribution';
+import DailyOverview from '@/components/dashboard/daily-overview';
+import { Button } from '@/components/ui/button';
+import { Plus } from 'lucide-react';
+import PlasticLoggerDialog from '@/components/plasticlogger';
+import { PlasticItem } from '@/lib/types';
+import { addItem } from '@/lib/actions/actions';
+import { useModal } from '@/hooks/modal-store';
+import { useSession } from 'next-auth/react';
 export default function DashboardPage() {
+  const { onOpen } = useModal()
+  const user = useSession().data?.user
+  const handleSubmit =async (item: PlasticItem[]) => {
+    // Handle the submitted items here
+    console.log('user :', user);
+    
+    console.log('Logged items:', item);
+    await addItem(item, user?.email);
+  };
+
   return (
     <div className='space-y-6'>
       <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
@@ -58,7 +73,33 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
       </div>
-      {/* <DailyOverview/> */}
+      <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-7'>
+        <Card className='col-span-3'>
+          <CardHeader>
+            <CardTitle>Todays Plastic usage</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <PlasticLoggerDialog
+              trigger={<Button className=' float-end' variant="default"><Plus/></Button>}
+              onSubmit={handleSubmit}
+              />
+            {/* <Button
+              onClick={() => {
+                  onOpen("logItem")
+              }}
+              className=' float-end' variant="default"><Plus /></Button> */}
+            <WasteDistribution />
+          </CardContent>
+        </Card>
+        <Card className='col-span-4'>
+          <CardHeader>
+            <CardTitle>Weekly Overview</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Overview />
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
