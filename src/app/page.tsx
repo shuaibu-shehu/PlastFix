@@ -1,38 +1,51 @@
-import Link from 'next/link'
+'use client'
 import { Button } from "@/components/ui/button"
+import { signOut, signIn, useSession } from 'next-auth/react';
 
 export default function LandingPage() {
+  const { data: session } = useSession()
+  const user = session?.user
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-100 to-green-200">
       <header className="p-5 bg-green-600 text-white">
         <nav className="container mx-auto flex justify-between items-center">
           <h1 className="text-2xl font-bold">EcoTrack</h1>
-          <Link href="/login">
-            <Button variant="outline" className="text-gray-800 border-white hover:bg-green-700">Login</Button>
-          </Link>
+          
+
+          {session && <Button
+            onClick={() => {
+              signOut()
+            }}
+            variant="outline"
+            className="text-gray-800 border-white hover:bg-green-700">Logout
+          </Button>}
+          { !user && <Button
+            onClick={() => {
+              signIn('google', { callbackUrl: '/dashboard' })
+            }}
+            variant="outline"
+            className="text-gray-800 border-white hover:bg-green-700">Login
+          </Button>}
+          
         </nav>
       </header>
 
-      <main className='container mx-auto mt-10 px-4'>
-        <section className='text-center'>
-          <h2 className='text-4xl font-bold text-green-800 mb-4'>
-            Reduce Plastic, Protect Life on Land
-          </h2>
-          <p className='text-xl text-green-700 mb-8'>
-            Track your plastic usage and make a positive impact on our
-            ecosystems.
-          </p>
-          <div className='flex justify-center space-x-4'>
-            <Link href='/login'>
-              <Button className='bg-green-600 hover:bg-green-700'>
-                Log Your Plastic Usage
-              </Button>
-            </Link>
-            <Button
-              variant='outline'
-              className='text-green-600 border-green-600 hover:bg-green-100'>
-              Learn More
+      <main className="container mx-auto mt-10 px-4">
+        <section className="text-center">
+          <h2 className="text-4xl font-bold text-green-800 mb-4">Reduce Plastic, Protect Life on Land</h2>
+          <p className="text-xl text-green-700 mb-8">Track your plastic usage and make a positive impact on our ecosystems.</p>
+          <div className="flex justify-center space-x-4">
+            {/* <OAuth/> */}
+            {/* <Link href="/login">
+              <Button className="bg-green-600 hover:bg-green-700">Log Your Plastic Usage</Button>
+            </Link> */}
+            <Button onClick={() => {
+              signIn('google', { callbackUrl: '/dashboard' })
+            }}>
+              login
             </Button>
+            <Button variant="outline" className="text-green-600 border-green-600 hover:bg-green-100">Learn More</Button>
           </div>
         </section>
 
