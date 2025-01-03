@@ -1,9 +1,9 @@
-'use client'
+'use client';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import {Overview} from '@/components/dashboard/overview';
+import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
 
 import {WasteDistribution} from '@/components/dashboard/waste-distribution';
+import Newsfeed from '@/components/caresoul/newfeed';
 
 export default function DashboardPage() {
   return (
@@ -65,14 +65,9 @@ export default function DashboardPage() {
             <WasteDistribution />
           </CardContent>
         </Card>
-        <Card className='col-span-4'>
-          <CardHeader>
-            <CardTitle>Weekly Overview</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Overview />
-          </CardContent>
-        </Card>
+        <div className='col-span-4'>
+          <Newsfeed />
+        </div>
       </div>
     </div>
   );
