@@ -49,26 +49,45 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <img src="/image1.png" alt="Wildlife in natural habitat" width={100} height={48} className="w-full h-48 object-cover rounded-md mb-4" />
-            <h3 className="text-2xl font-semibold text-green-700 mb-2">Protect Wildlife</h3>
-            <p className="text-gray-600">Reducing plastic waste helps preserve natural habitats and protects countless species from harm.</p>
+        <section className='mt-16 grid grid-cols-1 md:grid-cols-2 gap-8'>
+          <div className='bg-white p-6 rounded-lg shadow-md'>
+            <img
+              src='/image1.png'
+              alt='Wildlife in natural habitat'
+              width={100}
+              height={48}
+              className='w-full h-48 object-cover rounded-md mb-4'
+            />
+            <h3 className='text-2xl font-semibold text-green-700 mb-2'>
+              Protect Wildlife
+            </h3>
+            <p className='text-gray-600'>
+              Reducing plastic waste helps preserve natural habitats and
+              protects countless species from harm.
+            </p>
           </div>
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <img src="/image2.png" alt="Clean ecosystem" className="w-full h-48 object-cover rounded-md mb-4" />
-            <h3 className="text-2xl font-semibold text-green-700 mb-2">Preserve Ecosystems</h3>
-            <p className="text-gray-600">By minimizing plastic pollution, we contribute to the health and balance of entire ecosystems.</p>
+          <div className='bg-white p-6 rounded-lg shadow-md'>
+            <img
+              src='/image2.png'
+              alt='Clean ecosystem'
+              className='w-full h-48 object-cover rounded-md mb-4'
+            />
+            <h3 className='text-2xl font-semibold text-green-700 mb-2'>
+              Preserve Ecosystems
+            </h3>
+            <p className='text-gray-600'>
+              By minimizing plastic pollution, we contribute to the health and
+              balance of entire ecosystems.
+            </p>
           </div>
         </section>
       </main>
 
-      <footer className="mt-16 bg-green-600 text-white py-4">
-        <div className="container mx-auto text-center">
+      <footer className='mt-16 bg-green-600 text-white py-4'>
+        <div className='container mx-auto text-center'>
           <p>&copy; 2025 EcoTrack. All rights reserved.</p>
         </div>
       </footer>
     </div>
-  )
+  );
 }
-
