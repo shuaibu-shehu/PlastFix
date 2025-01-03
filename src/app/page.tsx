@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { Button } from "@/components/ui/button"
-import Image from 'next/image'
 
 export default function LandingPage() {
   return (
@@ -9,7 +8,7 @@ export default function LandingPage() {
         <nav className="container mx-auto flex justify-between items-center">
           <h1 className="text-2xl font-bold">EcoTrack</h1>
           <Link href="/login">
-            <Button variant="outline" className="text-white border-white hover:bg-green-700">Login</Button>
+            <Button variant="outline" className="text-gray-800 border-white hover:bg-green-700">Login</Button>
           </Link>
         </nav>
       </header>
