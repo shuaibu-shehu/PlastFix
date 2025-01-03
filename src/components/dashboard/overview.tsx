@@ -24,9 +24,6 @@ const data = [
 export function Overview() {
   return (
     <div className='bg-white shadow-md rounded-lg p-6'>
-      <h2 className='text-lg font-semibold text-gray-700 mb-4'>
-        Weekly Plastic Usage
-      </h2>
       <ResponsiveContainer width='100%' height={400}>
         <BarChart data={data}>
           <CartesianGrid strokeDasharray='3 3' stroke='#e2e8f0' />

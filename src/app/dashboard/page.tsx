@@ -2,9 +2,8 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {Overview} from '@/components/dashboard/overview';
-import {RecentActivity} from '@/components/dashboard/recent-activity';
+
 import {WasteDistribution} from '@/components/dashboard/waste-distribution';
-import {ImpactMetrics} from '@/components/dashboard/impact-metrics';
 
 export default function DashboardPage() {
   return (
@@ -58,38 +57,20 @@ export default function DashboardPage() {
         </Card>
       </div>
       <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-7'>
-        <Card className='col-span-5'>
+        <Card className='col-span-3'>
           <CardHeader>
-            <CardTitle>Weekly Overview</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Overview />
-          </CardContent>
-        </Card>
-        <Card className='col-span-2'>
-          <CardHeader>
-            <CardTitle>Waste Distribution</CardTitle>
+            <CardTitle>Todays Plastic usage</CardTitle>
           </CardHeader>
           <CardContent>
             <WasteDistribution />
           </CardContent>
         </Card>
-      </div>
-      <div className='grid gap-4 md:grid-cols-2'>
-        <Card>
+        <Card className='col-span-4'>
           <CardHeader>
-            <CardTitle>Recent Activity</CardTitle>
+            <CardTitle>Weekly Overview</CardTitle>
           </CardHeader>
           <CardContent>
-            <RecentActivity />
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Impact Metrics</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ImpactMetrics />
+            <Overview />
           </CardContent>
         </Card>
       </div>
