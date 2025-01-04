@@ -2,7 +2,7 @@ import {create} from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
 interface Item {
-    id: string;
+    id?: string;
     name: string;
     quantity: number;
     weight: number;
