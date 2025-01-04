@@ -1,6 +1,6 @@
-import DashboardPage from "@/components/dashboard/main-page";
-import { auth } from "@/auth";
-import { getPlasticItems } from "@/lib/actions/actions";
+import DashboardPage from '@/components/dashboard/main-page';
+import {auth} from '@/auth';
+import {getPlasticItems} from '@/lib/actions/actions';
 
 const getPreviousMonthDate = () => {
   const now = new Date(); // Current date
@@ -18,7 +18,7 @@ const getPreviousMonthDate = () => {
 };
 
 export default async function Home() {
-  const user = await auth().then((session) => { 
+  const user = await auth().then((session) => {
     return session?.user;
   });
 
@@ -26,11 +26,11 @@ export default async function Home() {
     return <div>Loading...</div>;
   }
 
-  const items = await getPlasticItems({ email: user?.email });
-  
+  const items = await getPlasticItems({email: user?.email});
+
   return (
-        <div>
+    <div>
       <DashboardPage user={user} items={items} />
-        </div>
-    )
- }
+    </div>
+  );
+}

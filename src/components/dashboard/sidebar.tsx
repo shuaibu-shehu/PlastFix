@@ -12,8 +12,8 @@ import {
   Settings,
   LogOut,
 } from 'lucide-react';
-import { Button } from '../ui/button';
-import { signOut } from 'next-auth/react';
+import {Button} from '../ui/button';
+import {signOut} from 'next-auth/react';
 
 const links = [
   {name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard},
@@ -29,8 +29,7 @@ export function Sidebar() {
   const handleLogout = async () => {
     await signOut(); // Assuming signOut is the function to log out
     window.location.href = '/login'; // Redirect to the login page after logout
-  }
-
+  };
 
   return (
     <div className='flex h-full w-56 flex-col border-r bg-white'>
@@ -73,7 +72,7 @@ export function Sidebar() {
         <Button
           variant={'outline'}
           onClick={() => {
-            handleLogout()
+            handleLogout();
           }}
           className={cn(
             'flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900'
