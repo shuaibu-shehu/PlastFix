@@ -14,6 +14,7 @@ import { useEffect } from 'react';
 import useItemStore from '@/hooks/itemStore';
 import { format, set } from 'date-fns';
 import usePlasticStatsStore from '@/hooks/plasticStatsStore';
+import RecentList from './recent-list';
 const getCurrentDate = () => {
     return new Date().toLocaleDateString('en-US', {
         year: 'numeric',
@@ -57,7 +58,6 @@ export default function DashboardPage({ user, items }: { user: any, items: any }
     const compareLastTwoMonths = (type) => {
 
         const lastMonth = items.filter(item => {
-            // item.createdAt >= getPreviousMonthDate(0)        
             const dateObject = new Date(item.createdAt);
             const formattedDate = format(dateObject, 'yyyy-MM-dd')
             const date1 = formattedDate.slice(0, 7)
@@ -68,7 +68,6 @@ export default function DashboardPage({ user, items }: { user: any, items: any }
         })
 
         const currentMonth = items.filter(item => {
-            // item.createdAt >= getPreviousMonthDate(0)        
             const dateObject = new Date(item.createdAt);
             const formattedDate = format(dateObject, 'yyyy-MM-dd')
             const date1 = formattedDate.slice(0, 7)
@@ -248,14 +247,15 @@ export default function DashboardPage({ user, items }: { user: any, items: any }
                     </CardContent>
                 </Card>
                 {/* Weekly Overview */}
-                {/* <Card className="col-span-4">
+                <Card className="col-span-4">
                     <CardHeader>
                         <CardTitle>Weekly Overview</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <Overview />
+                        {/* <Overview /> */}
+                        <RecentList/>
                     </CardContent>
-                </Card> */}
+                </Card>
             </div>
         </div>
     );
