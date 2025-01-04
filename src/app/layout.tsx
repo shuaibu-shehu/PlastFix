@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { auth } from "@/auth";
-import { SessionProvider } from "@/components/providers/SessionProvider";
+// import { SessionProvider } from "@/components/providers/SessionProvider";
 import { ModalProvider } from "@/components/providers/modals-provider";
+import { SessionProvider } from "next-auth/react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,12 +26,12 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // const session = await auth();
+  const session = await auth();
 
   return (
     <html lang="en">
       <body suppressHydrationWarning  className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <SessionProvider>
+        <SessionProvider session={session}>
           <ModalProvider />
           {children}
         </SessionProvider>

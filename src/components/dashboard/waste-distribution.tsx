@@ -14,6 +14,8 @@ const baseData = [
   },
 ];
 
+// fecaca - non-recyclable
+// fde68a - single use
 export function WasteDistribution() {
   const total = useMemo(
     () => baseData.reduce((sum, item) => sum + item.value, 0),

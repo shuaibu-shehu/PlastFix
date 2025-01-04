@@ -11,46 +11,28 @@ async function checkDBConnection() {
   }
 }
 
-export async function addItem(data: any[], email: string) {
-  checkDBConnection();
-
+export async function addItem(data: any, email: string) {
   try {
-    console.log('email:', email);
+    console.log('email', email);
+    const existintgUser = await getUserByEmail(email);
+    console.log('Existing user:', existintgUser);
 
-    const existingUser = await getUserByEmail(email);
-    console.log('Existing user:', existingUser);
-
-    if (!existingUser) {
-      throw new Error('User not found');
-    }
-
-    console.log('Data:', data);
-
-    const results = [];
+    console.log('Data:', data[0]);
     for (let i = 0; i < data.length; i++) {
-      try {
-        const newItem = await db.plasticItem.create({
-          data: {
-            name: data[i].name,
-            weight: Number(data[i].weight),
-            quantity: Number(data[i].quantity),
-            type: data[0].type,
-            userId: existingUser.id,
-          },
-        });
-        results.push({success: true, item: newItem});
-      } catch (itemError) {
-        console.error(`Error adding item at index ${i}:`, itemError);
-        results.push({success: false, error: itemError.message, item: data[i]});
-      }
+      await db.plasticItem.create({
+        data: {
+          name: data[i].name,
+          weight: Number(data[i].weight),
+          quantity: Number(data[i].quantity),
+          type: data[0].type,
+          userId: existintgUser?.id,
+        },
+      });
     }
 
-    return {
-      message: 'Items processed',
-      results,
-    };
+    // return result;
   } catch (error) {
-    console.error('Error creating plastic items:', error);
+    console.error('Error creating plastic item:', error);
     throw error;
   }
 }
@@ -63,19 +45,60 @@ export async function getUserByEmail(email: string) {
   });
 }
 
-export async function getPlasticItems(date: string) {
+interface GetPlasticItemsParams {
+  dateString?: string;
+  email: string;
+}
+
+export async function getPlasticItems({
+  dateString,
+  email,
+}: GetPlasticItemsParams) {
   try {
-    const items = await db.plasticItem.findMany({
-      where: {
-        createdAt: {
-          gte: date,
+    const user = await getUserByEmail(email);
+
+    // const date = new Date(dateString);
+    // const formattedDate = date.toISOString().split('T')[0]; // "2025-01-03"
+    // console.log(formattedDate);
+
+    let items: any[] = [];
+    console.log('date', dateString, 'user id', user?.id);
+    if (dateString) {
+      items = await db.plasticItem.findMany({
+        where: {
+          createdAt: {
+            gte: dateString,
+          },
+          userId: user?.id,
         },
-      },
-    });
-    console.log(items);
+      });
+    } else {
+      items = await db.plasticItem.findMany({
+        where: {
+          userId: user?.id,
+        },
+      });
+    }
     return items;
   } catch (error) {
     console.error('Error fetching plastic items:', error);
     throw error;
   }
 }
+
+// export async function getAllPlasticItems(date: any, userId: string) {
+//     try {
+//         const items = await db.plasticItem.findMany({
+//             where: {
+//                 createdAt: {
+//                     gte: date
+//                 },
+//                 userId: userId
+//             }
+//         });
+//         return items;
+//     } catch (error) {
+//         console.error('Error fetching plastic items:', error);
+//         throw error;
+//     }
+// }
