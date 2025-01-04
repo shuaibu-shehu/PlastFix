@@ -1,6 +1,6 @@
 'use client';
 
-import {Cell, Pie, PieChart, ResponsiveContainer} from 'recharts';
+import {Cell, Pie, PieChart, ResponsiveContainer, Tooltip} from 'recharts';
 import {useMemo, useEffect, useState} from 'react';
 import useItemStore from '@/hooks/itemStore';
 
@@ -71,7 +71,7 @@ export function WasteDistribution() {
   }, [itemsCreatedToday]);
 
   return (
-    <div className='h-[250px] w-full flex flex-col items-center'>
+    <div className='h-[250px] w-full flex flex-col items-center bg-purple-400'>
       <ResponsiveContainer width='100%' height='100%'>
         <PieChart>
           <Pie

@@ -1,6 +1,7 @@
 import {ImpactMetrics} from '@/components/dashboard/impact-metrics';
 import {Overview} from '@/components/dashboard/overview';
 import {RecentActivity} from '@/components/dashboard/recent-activity';
+import WeeklyReport from '@/components/reports/weeklyreport';
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
 import React from 'react';
 
@@ -77,25 +78,7 @@ const ReportPage: React.FC = () => {
             ))}
           </div>
         </section>
-        {/* Trends Section */}{' '}
-        <div className='grid gap-4 md:grid-cols-2 mt-10'>
-          <Card>
-            <CardHeader>
-              <CardTitle>Recent Activity</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <RecentActivity />
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle>Impact Metrics</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ImpactMetrics />
-            </CardContent>
-          </Card>
-        </div>
+        {/* Trends Section */}
         <Card className='col-span-4'>
           <CardHeader>
             <CardTitle>Weekly Overview</CardTitle>

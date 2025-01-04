@@ -2,15 +2,24 @@ import Image from 'next/image';
 
 const slides = [
   {
-    src: '/news5.jpg',
+    src: '/log.png', // Replace with the correct image path for this feature
+    title: 'Daily Plastic Usage Logger',
+    description:
+      'Track your daily plastic usage by categorizing items into single-use plastics, recyclables, and non-recyclables. Stay aware of your consumption patterns to make conscious choices.',
     index: 1,
   },
   {
-    src: '/news7.jpg',
+    src: '/report.png', // Replace with the correct image path for this feature
+    title: 'Weekly Report Generator',
+    description:
+      'Analyze weekly trends in your plastic consumption, discover areas for improvement, and see the environmental impact of your usage. Get actionable insights for a sustainable lifestyle.',
     index: 2,
   },
   {
-    src: '/news4.jpg',
+    src: '/tips.jpg', // Replace with the correct image path for this feature
+    title: 'Practical Waste Reduction Tips',
+    description:
+      'Learn practical ways to reduce waste, like switching to biodegradable packaging, reusable containers, and bulk purchasing. Small changes can make a big difference!',
     index: 3,
   },
 ];
@@ -32,8 +41,8 @@ export function OrbSection() {
                 className='rounded-2xl object-cover'
               />
             </div>
-            <h1>heloods</h1>
-            <p>somretgs </p>
+            <h2 className='mt-4 text-lg font-bold'>{obj.title}</h2>
+            <p className='mt-2 text-gray-700'>{obj.description}</p>
           </div>
         ))}
       </div>

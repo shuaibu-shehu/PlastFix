@@ -2,7 +2,13 @@ import Link from 'next/link';
 import {Button} from '@/components/ui/button';
 import {Leaf} from 'lucide-react';
 
-export function NavBar() {
+interface HeroSectionProps {
+  isLoggedIn: boolean;
+  onSignIn: () => void;
+  onSignOut: () => void;
+}
+
+export function NavBar({isLoggedIn, onSignIn, onSignOut}: HeroSectionProps) {
   return (
     <nav className='fixed top-0 left-0 right-0 z-50 bg-transparent'>
       <div className='container mx-auto px-20'>
@@ -34,8 +40,10 @@ export function NavBar() {
             </Button>
             <Button
               variant='secondary'
-              className='bg-blue-100 hover:bg-blue-200 text-blue-700'>
-              Login
+              className='bg-green-100 hover:bg-green-200 text-green-700 hover:scale-90'
+              onClick={isLoggedIn ? onSignOut : onSignIn}>
+              {' '}
+              {isLoggedIn ? 'Logout' : 'Login'}
             </Button>
           </div>
         </div>

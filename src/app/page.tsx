@@ -20,7 +20,11 @@ export default function LandingPage() {
 
   return (
     <div className='min-h-screen'>
-      <NavBar />
+      <NavBar
+        isLoggedIn={!!user}
+        onSignIn={handleSignIn}
+        onSignOut={handleSignOut}
+      />
       <HeroSection
         isLoggedIn={!!user}
         onSignIn={handleSignIn}
