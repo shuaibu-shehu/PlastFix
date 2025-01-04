@@ -12,7 +12,9 @@ import { addItem } from '@/lib/actions/actions';
 import { useModal } from '@/hooks/modal-store';
 import { useEffect } from 'react';
 import useItemStore from '@/hooks/itemStore';
-import { format } from 'date-fns';
+import { format, set } from 'date-fns';
+import usePlasticStatsStore from '@/hooks/plasticStatsStore';
+import RecentList from './recent-list';
 const getCurrentDate = () => {
     return new Date().toLocaleDateString('en-US', {
         year: 'numeric',
@@ -37,47 +39,25 @@ const getPreviousMonthDate = (monthsAgo: number) => {
 };
 
 export default function DashboardPage({ user, items }: { user: any, items: any }) {
-    const { setItems, items: itemsStore } = useItemStore();
-    // const { onOpen } = useModal();
-    // const { data: session, status } = useSession();
-    // const user = session?.user;
-
-    console.log('Items: ', items[0]);
+    const { setItems, items: itemsStore, addItem:addItemStore } = useItemStore();
+    // const { setPlasticStats } = usePlasticStatsStore();
+    const {setPlasticStats, recyclableCompareLastMonth, recyclableWeight, recyclablePercentage, nonRecyclableCompareLastMonth, nonRecyclableWeight, nonRecyclablePercentage, singleUseCompareLastMonth, singleUseWeight, singleUsePercentage } = usePlasticStatsStore();
 
     const handleSubmit = async (item: PlasticItem[]) => {
-        console.log('User:', user);
-        console.log('Logged items:', item);
         await addItem(item, user?.email);
+        const updatedItems = [...itemsStore, ...item]; // Combine existing items with the new item(s)
+        setItems(updatedItems); // Update the items store
+        for (let i = 0; i < item.length; i++) {
+            addItemStore(item[i]);
+        }
+        calculatePlasticStats(updatedItems);
+        window.location.reload();
     };
 
-    useEffect(() => {
-        setItems(items);
-        console.log('Items store:', itemsStore);
-
-    }, [user]);
-
-
-
-    // Calculate the total weight of non-recyclable items
-
-    const totalWeightRecyclable = itemsStore
-        .filter(item => item.type === "recyclable") // Filter for non-recyclable items
-        .reduce((total, item) => total + item.weight, 0); // Sum the weights
-
-    const totalWeightsingleUse = itemsStore
-        .filter(item => item.type === "single-use") // Filter for non-recyclable items
-        .reduce((total, item) => total + item.weight, 0); // Sum the weights
-
-    const totalWeightsNonRecyclable = itemsStore
-        .filter(item => item.type === "non-recyclable") // Filter for non-recyclable items
-        .reduce((total, item) => total + item.weight, 0); // Sum the weights
-
-    // const
 
     const compareLastTwoMonths = (type) => {
 
         const lastMonth = items.filter(item => {
-            // item.createdAt >= getPreviousMonthDate(0)        
             const dateObject = new Date(item.createdAt);
             const formattedDate = format(dateObject, 'yyyy-MM-dd')
             const date1 = formattedDate.slice(0, 7)
@@ -88,12 +68,11 @@ export default function DashboardPage({ user, items }: { user: any, items: any }
         })
 
         const currentMonth = items.filter(item => {
-            // item.createdAt >= getPreviousMonthDate(0)        
             const dateObject = new Date(item.createdAt);
             const formattedDate = format(dateObject, 'yyyy-MM-dd')
             const date1 = formattedDate.slice(0, 7)
             const date2 = getPreviousMonthDate(-1).split('T')[0].slice(0, 7)
-            const res = date1 == date2 && item.type==type;
+            const res = date1 == date2 && item.type == type;
 
             return res
         })
@@ -118,9 +97,9 @@ export default function DashboardPage({ user, items }: { user: any, items: any }
 
     }
 
-    
+
     const calculatePlasticStats = (items) => {
-        
+
         const recyclableCompareLastMonth = compareLastTwoMonths("recyclable");
         const nonRecyclableCompareLastMonth = compareLastTwoMonths("non-recyclable");
         const singleUseCompareLastMonth = compareLastTwoMonths("single-use");
@@ -142,7 +121,7 @@ export default function DashboardPage({ user, items }: { user: any, items: any }
         const singleUsePercentage = totalWeight > 0 ? (singleUseWeight / totalWeight) * 100 : 0;
 
 
-        return {
+        const data = {
             recyclableCompareLastMonth,
             nonRecyclableCompareLastMonth,
             singleUseCompareLastMonth,
@@ -154,9 +133,38 @@ export default function DashboardPage({ user, items }: { user: any, items: any }
             nonRecyclablePercentage: nonRecyclablePercentage.toFixed(2), // Format to 2 decimal places
             singleUsePercentage: singleUsePercentage.toFixed(2), // Format to 2 decimal places
         };
+        setPlasticStats(data);
     };
 
-    const { recyclableCompareLastMonth, recyclableWeight, recyclablePercentage, nonRecyclableCompareLastMonth,nonRecyclableWeight,nonRecyclablePercentage, singleUseCompareLastMonth, singleUseWeight, singleUsePercentage} = calculatePlasticStats(items);
+
+
+    useEffect(() => {
+        setItems(items);
+        calculatePlasticStats(items);
+        console.log('Items store:', itemsStore);
+
+    }, [itemsStore]);
+
+
+
+    // Calculate the total weight of non-recyclable items
+
+    const totalWeightRecyclable = itemsStore
+        .filter(item => item.type === "recyclable") // Filter for non-recyclable items
+        .reduce((total, item) => total + item.weight, 0); // Sum the weights
+
+    const totalWeightsingleUse = itemsStore
+        .filter(item => item.type === "single-use") // Filter for non-recyclable items
+        .reduce((total, item) => total + item.weight, 0); // Sum the weights
+
+    const totalWeightsNonRecyclable = itemsStore
+        .filter(item => item.type === "non-recyclable") // Filter for non-recyclable items
+        .reduce((total, item) => total + item.weight, 0); // Sum the weights
+
+    // const
+
+   
+    // const { recyclableCompareLastMonth, recyclableWeight, recyclablePercentage, nonRecyclableCompareLastMonth,nonRecyclableWeight,nonRecyclablePercentage, singleUseCompareLastMonth, singleUseWeight, singleUsePercentage} = calculatePlasticStats(items);
     return (
         <div className="space-y-6">
             <CardHeader className="bg-green-600 text-white rounded-t-lg">
@@ -176,7 +184,7 @@ export default function DashboardPage({ user, items }: { user: any, items: any }
                         <CardTitle className="text-sm font-medium">Plastics saved</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold text-green-600">{recyclableCompareLastMonth.weight} kg</div>
+                        <div className="text-2xl font-bold text-green-600">{recyclableCompareLastMonth.weight ? recyclableCompareLastMonth.weight.toFixed(2): "0.00" } g</div>
                         <p className="text-xs text-muted-foreground">{recyclableCompareLastMonth.status=="up" ?`+${recyclableCompareLastMonth.percentage}`:`-${recyclableCompareLastMonth.percentage}`}% from last month</p>
                     </CardContent>
                 </Card>
@@ -185,7 +193,7 @@ export default function DashboardPage({ user, items }: { user: any, items: any }
                         <CardTitle className='text-sm font-medium'>Recyclables items</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className='text-2xl font-bold text-green-600'>{recyclableWeight} kg</div>
+                        <div className='text-2xl font-bold text-green-600'>{recyclableWeight? recyclableWeight: "0.00"} g</div>
                         <p className='text-xs text-muted-foreground'>{recyclablePercentage}% of total waste</p>
                     </CardContent>
                 </Card>
@@ -194,18 +202,18 @@ export default function DashboardPage({ user, items }: { user: any, items: any }
                         <CardTitle className='text-sm font-medium'>Non-Recyclables items</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className='text-2xl font-bold text-[#dc2626]'>{nonRecyclableWeight} kg</div>
+                        <div className='text-2xl font-bold text-[#dc2626]'>{nonRecyclableWeight ? nonRecyclableWeight: "0.00"} g</div>
                         <p className='text-xs text-muted-foreground'>{nonRecyclablePercentage}% of total waste</p>
                     </CardContent>
                 </Card>
                 <Card>
                     <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                        <CardTitle className='text-sm font-medium'>
+                        <CardTitle className='text-sm font-medium'> 
                             Single-Use Items
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className='text-2xl font-bold text-orange-600'>{ singleUseCompareLastMonth.weight.toFixed(1)} kg</div>
+                        <div className='text-2xl font-bold text-orange-600'>{singleUseCompareLastMonth.weight ? singleUseCompareLastMonth.weight.toFixed(2): "0.00"} g</div>
                         <p className='text-xs text-muted-foreground'>
                             <span className="text-xs text-muted-foreground">{singleUseCompareLastMonth.status == "up" ? `+${singleUseCompareLastMonth.percentage}` : `-${singleUseCompareLastMonth.percentage}`}% from last month</span>
                         </p>
@@ -239,14 +247,15 @@ export default function DashboardPage({ user, items }: { user: any, items: any }
                     </CardContent>
                 </Card>
                 {/* Weekly Overview */}
-                {/* <Card className="col-span-4">
+                <Card className="col-span-4">
                     <CardHeader>
                         <CardTitle>Weekly Overview</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <Overview />
+                        {/* <Overview /> */}
+                        <RecentList/>
                     </CardContent>
-                </Card> */}
+                </Card>
             </div>
         </div>
     );
