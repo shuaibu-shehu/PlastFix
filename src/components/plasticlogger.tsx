@@ -3,49 +3,49 @@ import {X, Trash2} from 'lucide-react';
 import {PlasticItem, PlasticLoggerDialogProps} from '@/lib/types';
 
 const predefinedItems: PlasticItem[] = [
-  {name: 'Water Bottle', type: 'recyclable', weight: '0.025', quantity: '1'},
-  {name: 'Bag', type: 'recyclable', weight: '0.005', quantity: '1'},
-  {name: 'Cover', type: 'recyclable', weight: '0.005', quantity: '1'},
-  {name: 'Condom', type: 'single-use', weight: '0.002', quantity: '1'},
+  {name: 'Water Bottle', type: 'RECYCLABLE', weight: '0.025', quantity: '1'},
+  {name: 'Bag', type: 'RECYCLABLE', weight: '0.005', quantity: '1'},
+  {name: 'Cover', type: 'RECYCLABLE', weight: '0.005', quantity: '1'},
+  {name: 'Condom', type: 'SINGLE_USE', weight: '0.002', quantity: '1'},
 
-  {name: 'Dustbin', type: 'recyclable', weight: '50.0', quantity: '1'},
-  {name: 'Ice Tray', type: 'recyclable', weight: '0.1', quantity: '1'},
-  {name: 'Food Tray', type: 'recyclable', weight: '0.25', quantity: '1'},
-  {name: 'Bucket', type: 'recyclable', weight: '0.5', quantity: '1'},
-  {name: 'Mug', type: 'single-use', weight: '0.084', quantity: '1'},
-  {name: 'Planter', type: 'recyclable', weight: '1.0', quantity: '1'},
-  {name: 'Cloth Hanger', type: 'recyclable', weight: '0.227', quantity: '1'},
-  {name: 'Laundry Basket', type: 'recyclable', weight: '1.62', quantity: '1'},
-  {name: 'Broom', type: 'recyclable', weight: '0.4', quantity: '1'},
-  {name: 'Toothbrush', type: 'single-use', weight: '0.015', quantity: '1'},
-  {name: 'Shampoo Bottle', type: 'recyclable', weight: '0.05', quantity: '1'},
+  {name: 'Dustbin', type: 'RECYCLABLE', weight: '50.0', quantity: '1'},
+  {name: 'Ice Tray', type: 'RECYCLABLE', weight: '0.1', quantity: '1'},
+  {name: 'Food Tray', type: 'RECYCLABLE', weight: '0.25', quantity: '1'},
+  {name: 'Bucket', type: 'RECYCLABLE', weight: '0.5', quantity: '1'},
+  {name: 'Mug', type: 'SINGLE_USE', weight: '0.084', quantity: '1'},
+  {name: 'Planter', type: 'RECYCLABLE', weight: '1.0', quantity: '1'},
+  {name: 'Cloth Hanger', type: 'RECYCLABLE', weight: '0.227', quantity: '1'},
+  {name: 'Laundry Basket', type: 'RECYCLABLE', weight: '1.62', quantity: '1'},
+  {name: 'Broom', type: 'RECYCLABLE', weight: '0.4', quantity: '1'},
+  {name: 'Toothbrush', type: 'SINGLE_USE', weight: '0.015', quantity: '1'},
+  {name: 'Shampoo Bottle', type: 'RECYCLABLE', weight: '0.05', quantity: '1'},
 
-  {name: 'Straw', type: 'single-use', weight: '0.001', quantity: '1'},
-  {name: 'Cutlery Set', type: 'single-use', weight: '0.01', quantity: '1'},
-  {name: 'Yogurt Cup', type: 'recyclable', weight: '0.02', quantity: '1'},
-  {name: 'Detergent Bottle', type: 'recyclable', weight: '0.1', quantity: '1'},
+  {name: 'Straw', type: 'SINGLE_USE', weight: '0.001', quantity: '1'},
+  {name: 'Cutlery Set', type: 'SINGLE_USE', weight: '0.01', quantity: '1'},
+  {name: 'Yogurt Cup', type: 'RECYCLABLE', weight: '0.02', quantity: '1'},
+  {name: 'Detergent Bottle', type: 'RECYCLABLE', weight: '0.1', quantity: '1'},
   {
     name: 'Styrofoam Container',
-    type: 'non-recyclable',
+    type: 'NON_RECYCLABLE',
     weight: '0.01',
     quantity: '1',
   },
   {
     name: 'Blister Packaging',
-    type: 'non-recyclable',
+    type: 'NON_RECYCLABLE',
     weight: '0.005',
     quantity: '1',
   },
-  {name: 'Cling Film', type: 'non-recyclable', weight: '0.002', quantity: '1'},
+  {name: 'Cling Film', type: 'NON_RECYCLABLE', weight: '0.002', quantity: '1'},
   {
     name: 'Composite Plastic',
-    type: 'non-recyclable',
+    type: 'NON_RECYCLABLE',
     weight: '0.015',
     quantity: '1',
   },
   {
     name: 'Polycarbonate Item',
-    type: 'non-recyclable',
+    type: 'NON_RECYCLABLE',
     weight: '0.03',
     quantity: '1',
   },
@@ -61,14 +61,14 @@ const PlasticLoggerDialog: React.FC<PlasticLoggerDialogProps> = ({
       name: '',
       quantity: '1',
       weight: '0.1',
-      type: 'single-use',
+      type: 'SINGLE_USE',
     },
   ]);
 
   const handleAddItem = () => {
     setItems([
       ...items,
-      {name: '', quantity: '1', weight: '0.1', type: 'single-use'},
+      {name: '', quantity: '1', weight: '0.1', type: 'SINGLE_USE'},
     ]);
   };
 
@@ -89,19 +89,18 @@ const PlasticLoggerDialog: React.FC<PlasticLoggerDialogProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit?.(items);
-    setItems([{ name: '', quantity: '1', weight: '0.1', type: "RECYCLABLE" }]);
+    setItems([{name: '', quantity: '1', weight: '0.1', type: 'RECYCLABLE'}]);
     setIsOpen(false);
   };
 
   return (
-    <div>
+    <div className='relative'>
       <div onClick={() => setIsOpen(true)}>{trigger}</div>
 
       {isOpen && (
         <div className='fixed inset-0 bg-black/50 flex items-center justify-center z-50'>
           <div className='bg-white rounded-lg p-6 w-[800px] max-h-[90vh] overflow-y-auto'>
             <div className='flex justify-between items-center mb-6'>
-              <AlertDialogTitle className='text-xl font-semibold'>Log Plastic Usage</AlertDialogTitle>
               <button
                 onClick={() => setIsOpen(false)}
                 className='text-gray-400 hover:text-gray-500'>
@@ -148,9 +147,9 @@ const PlasticLoggerDialog: React.FC<PlasticLoggerDialogProps> = ({
                         )
                       }
                       className='w-40 p-2 rounded-lg bg-gray-50'>
-                      <option value='single-use'>Single-Use</option>
-                      <option value='recyclable'>Recyclable</option>
-                      <option value='non-recyclable'>Non-Recyclable</option>
+                      <option value='SINGLE_USE'>Single Use</option>
+                      <option value='RECYCLABLE'>Recyclable</option>
+                      <option value='NON_RECYCLABLE'>Non-Recyclable</option>
                     </select>
 
                     <input
