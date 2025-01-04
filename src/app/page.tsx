@@ -6,6 +6,7 @@ import {OrbSection} from '@/components/landing/orb-section';
 import {signOut, signIn, useSession} from 'next-auth/react';
 
 // LandingPage.tsx
+//rem vid
 export default function LandingPage() {
   const {data: session} = useSession();
   const user = session?.user;
