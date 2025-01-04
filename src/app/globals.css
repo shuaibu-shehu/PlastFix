@@ -70,3 +70,19 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+
+/* styles.css or your relevant CSS file */
+/* @keyframes wave {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.animated-emoji {
+    display: inline-block;
+    animation: wave 0.5s ease-in-out infinite;
+} */
