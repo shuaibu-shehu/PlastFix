@@ -1,105 +1,36 @@
-'use client'
+import DashboardPage from "@/components/dashboard/main-page";
+import { auth } from "@/auth";
+import { getPlasticItems } from "@/lib/actions/actions";
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import {Overview} from '@/components/dashboard/overview';
+const getPreviousMonthDate = () => {
+  const now = new Date(); // Current date
+  const currentYear = now.getFullYear();
+  const currentMonth = now.getMonth(); // 0 for January, 11 for December
 
-import {WasteDistribution} from '@/components/dashboard/waste-distribution';
-import DailyOverview from '@/components/dashboard/daily-overview';
-import { Button } from '@/components/ui/button';
-import { Plus } from 'lucide-react';
-import PlasticLoggerDialog from '@/components/plasticlogger';
-import { PlasticItem } from '@/lib/types';
-import { addItem } from '@/lib/actions/actions';
-import { useModal } from '@/hooks/modal-store';
-import { useSession } from 'next-auth/react';
-export default function DashboardPage() {
-  const { onOpen } = useModal()
-  const user = useSession().data?.user
-  const handleSubmit =async (item: PlasticItem[]) => {
-    // Handle the submitted items here
-    console.log('user :', user);
-    
-    console.log('Logged items:', item);
-    await addItem(item, user?.email);
-  };
+  // Calculate the previous month
+  const previousMonth = currentMonth === 0 ? 11 : currentMonth - 1; // If January, set to December
+  const year = currentMonth === 0 ? currentYear - 1 : currentYear; // If January, decrement the year
 
+  // Create a date for the first day of the previous month
+  const firstDayOfPreviousMonth = new Date(year, previousMonth, 1);
+
+  return firstDayOfPreviousMonth.toISOString(); // Returns the date in ISO format
+};
+
+export default async function Home() {
+  const user = await auth().then((session) => { 
+    return session?.user;
+  });
+
+  if (!user?.email) {
+    return <div>Loading...</div>;
+  }
+
+  const items = await getPlasticItems({ email: user?.email });
+  
   return (
-    <div className='space-y-6'>
-      <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
-        <Card>
-          <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-            <CardTitle className='text-sm font-medium'>
-              Total Plastic Saved
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className='text-2xl font-bold text-green-600'>2.5 kg</div>
-            <p className='text-xs text-muted-foreground'>
-              +20% from last month
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-            <CardTitle className='text-sm font-medium'>Recyclables</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className='text-2xl font-bold text-green-600'>1.8 kg</div>
-            <p className='text-xs text-muted-foreground'>72% of total waste</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-            <CardTitle className='text-sm font-medium'>
-              Single-Use Items
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className='text-2xl font-bold text-orange-600'>0.4 kg</div>
-            <p className='text-xs text-muted-foreground'>
-              -15% from last month
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-            <CardTitle className='text-sm font-medium'>
-              Environmental Impact
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className='text-2xl font-bold text-blue-600'>3.2 CO₂e</div>
-            <p className='text-xs text-muted-foreground'>Emissions prevented</p>
-          </CardContent>
-        </Card>
-      </div>
-      <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-7'>
-        <Card className='col-span-3'>
-          <CardHeader>
-            <CardTitle>Todays Plastic usage</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <PlasticLoggerDialog
-              trigger={<Button className=' float-end' variant="default"><Plus/></Button>}
-              onSubmit={handleSubmit}
-              />
-            {/* <Button
-              onClick={() => {
-                  onOpen("logItem")
-              }}
-              className=' float-end' variant="default"><Plus /></Button> */}
-            <WasteDistribution />
-          </CardContent>
-        </Card>
-        <Card className='col-span-4'>
-          <CardHeader>
-            <CardTitle>Weekly Overview</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Overview />
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-  );
-}
+        <div>
+      <DashboardPage user={user} items={items} />
+        </div>
+    )
+ }

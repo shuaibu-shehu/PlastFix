@@ -63,7 +63,7 @@ export function Sidebar() {
       </nav>
       <div className='border-t p-3'>
         <Link
-          href='/settings'
+          href='/dashboard/settings'
           className={cn(
             'flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900'
           )}>
