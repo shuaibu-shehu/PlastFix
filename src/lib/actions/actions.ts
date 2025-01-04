@@ -4,9 +4,7 @@ import { db } from '@/lib/prisma'
 
 export async function addItem(data: any, email: string) {
     try {
-        console.log("email", email);
         const existintgUser = await getUserByEmail(email);
-        console.log('Existing user:', existintgUser);
 
         console.log('Data:', data[0]);
         for (let i = 0; i < data.length; i++) {

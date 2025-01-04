@@ -15,10 +15,11 @@ export const addLogItemSchema = z.object({
     }),
 });
 export interface PlasticItem {
+  id?: string;
   name: string;
-  quantity: string;
-  weight: string;
-    type: 'SINGLE_USE' | 'RECYCLABLE' | 'NON_RECYCLABLE';
+  quantity: number;
+  weight: number;
+  type: string;
 }
 
 export interface PlasticType {
