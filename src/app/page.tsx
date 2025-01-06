@@ -97,11 +97,7 @@ export default function LandingPage() {
           </section>
         </main>
 
-        <footer className=" mt-24 button sticky bg-green-400 bg-opacity-80 text-white py-6">
-          <div className="container mx-auto text-center">
-            <p>&copy; 2025 EcoTrack. All rights reserved.</p>
-          </div>
-        </footer>
+        
       </div>
     </div>
   )

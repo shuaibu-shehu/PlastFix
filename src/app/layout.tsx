@@ -34,6 +34,11 @@ export default async function RootLayout({
         <SessionProvider session={session}>
           <ModalProvider />
           {children}
+          <footer className=" button sticky bg-green-400 bg-opacity-80 text-white py-6">
+          <div className="container mx-auto text-center">
+            <p>&copy; 2025 EcoTrack. All rights reserved.</p>
+          </div>
+        </footer>
         </SessionProvider>
       </body>
     </html>
