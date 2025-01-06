@@ -15,6 +15,7 @@ import useItemStore from '@/hooks/itemStore';
 import { format, set } from 'date-fns';
 import usePlasticStatsStore from '@/hooks/plasticStatsStore';
 import RecentList from './recent-list';
+import PlasticClassification from './plastic-classification';
 const getCurrentDate = () => {
     return new Date().toLocaleDateString('en-US', {
         year: 'numeric',
@@ -148,19 +149,6 @@ export default function DashboardPage({ user, items }: { user: any, items: any }
 
 
     // Calculate the total weight of non-recyclable items
-
-    const totalWeightRecyclable = itemsStore
-        .filter(item => item.type === "recyclable") // Filter for non-recyclable items
-        .reduce((total, item) => total + item.weight, 0); // Sum the weights
-
-    const totalWeightsingleUse = itemsStore
-        .filter(item => item.type === "single-use") // Filter for non-recyclable items
-        .reduce((total, item) => total + item.weight, 0); // Sum the weights
-
-    const totalWeightsNonRecyclable = itemsStore
-        .filter(item => item.type === "non-recyclable") // Filter for non-recyclable items
-        .reduce((total, item) => total + item.weight, 0); // Sum the weights
-
     // const
 
    
@@ -173,7 +161,6 @@ export default function DashboardPage({ user, items }: { user: any, items: any }
                     <span>Welcome to Your Plastic Tracker!</span>
                 </CardTitle>
                 <p className="text-green-100">{getCurrentDate()}</p>
-                <p>{getPreviousMonthDate(0)}</p>
                 {/* <p>{items[0].createdAt.toISOString()}</p> */}
                 {/* <p></p> */}
             </CardHeader>
@@ -232,6 +219,7 @@ export default function DashboardPage({ user, items }: { user: any, items: any }
                 </Card> */}
                 {/* Add more cards */}
             </div>
+            <PlasticClassification/>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
                 {/* Today's Plastic Usage */}
                 <Card className="col-span-3">
@@ -249,7 +237,7 @@ export default function DashboardPage({ user, items }: { user: any, items: any }
                 {/* Weekly Overview */}
                 <Card className="col-span-4">
                     <CardHeader>
-                        <CardTitle>Weekly Overview</CardTitle>
+                        <CardTitle>Recent Record</CardTitle>
                     </CardHeader>
                     <CardContent>
                         {/* <Overview /> */}

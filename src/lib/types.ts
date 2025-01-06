@@ -32,3 +32,35 @@ export interface PlasticLoggerDialogProps {
   trigger: React.ReactNode;
   onSubmit?: (items: PlasticItem[]) => void;
 }
+
+
+
+
+
+export interface PlasticItem {
+  Name: string;
+  Quantity: number;
+  Type: 'Non-recyclable' | 'Recyclable' | 'Single-use';
+  Weight: number;
+  Created_At: string;
+}
+
+export interface DailyData {
+  date: string;
+  totalWeight: number;
+  recyclableWeight: number;
+  nonRecyclableWeight: number;
+  singleUseWeight: number;
+}
+
+export interface WeeklyData {
+  startDate: string;
+  endDate: string;
+  totalWeight: number;
+  totalQuantity: number;
+  singleUseWeight: number;
+  recyclableWeight: number;
+  nonRecyclableWeight: number;
+  dailyData: DailyData[];
+}
+

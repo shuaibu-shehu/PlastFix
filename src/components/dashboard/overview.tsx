@@ -1,5 +1,6 @@
 'use client';
 
+import useItemStore from '@/hooks/itemStore';
 import {
   Bar,
   BarChart,
@@ -22,6 +23,13 @@ const data = [
 ];
 
 export function Overview() {
+
+  const { items } = useItemStore();
+  
+  console.log('items from report:', items);
+
+  
+  
   return (
     <div className='bg-white shadow-md rounded-lg p-6'>
       <ResponsiveContainer width='100%' height={400}>

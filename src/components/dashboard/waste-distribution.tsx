@@ -65,7 +65,10 @@ export function WasteDistribution() {
 
   return (
     <div className='h-[350px] w-full flex flex-col items-center'>
+             {itemsCreatedToday.length > 0 && <p className="text-center text-4xl "> Added Items {itemsCreatedToday.length}</p>}
+
       <ResponsiveContainer width='100%' height='100%'>
+       
         <PieChart>
           <Pie
             data={baseData}

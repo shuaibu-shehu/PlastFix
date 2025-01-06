@@ -1,93 +1,109 @@
 'use client'
+
 import { Button } from "@/components/ui/button"
-import { signOut, signIn, useSession } from 'next-auth/react';
+import { signOut, signIn, useSession } from 'next-auth/react'
+import { motion } from 'framer-motion'
 
 export default function LandingPage() {
   const { data: session } = useSession()
   const user = session?.user
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-100 to-green-200">
-      <header className="p-5 bg-green-600 text-white">
-        <nav className="container mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold">EcoTrack</h1>
-          
+    <div className="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed relative overflow-hidden">
+      {/* Background image with overlay */}
+      <div
+        className="absolute inset-0 bg-cover bg-center z-0"
+        style={{
+          backgroundImage: "url('/news2.jpg')",
+          filter: "brightness(0.6)"
+        }}
+      ></div>
 
-          {session && <Button
-            onClick={() => {
-              signOut()
-            }}
-            variant="outline"
-            className="text-gray-800 border-white hover:bg-green-700">Logout
-          </Button>}
-          { !user && <Button
-            onClick={() => {
-              signIn('google', { callbackUrl: '/dashboard' })
-            }}
-            variant="outline"
-            className="text-gray-800 border-white hover:bg-green-700">Login
-          </Button>}
-          
-        </nav>
-      </header>
+      {/* Content */}
+      <div className="relative z-10">
+        <header className="p-5 bg-green-400 bg-opacity-80 text-white">
+          <nav className="container mx-auto flex justify-between items-center">
+            <motion.h1
+              className="text-3xl font-bold text-green-300"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              EcoTrack
+            </motion.h1>
 
-      <main className="container mx-auto mt-10 px-4">
-        <section className="text-center">
-          <h2 className="text-4xl font-bold text-green-800 mb-4">Reduce Plastic, Protect Life on Land</h2>
-          <p className="text-xl text-green-700 mb-8">Track your plastic usage and make a positive impact on our ecosystems.</p>
-          <div className="flex justify-center space-x-4">
-            {/* <OAuth/> */}
-            {/* <Link href="/login">
-              <Button className="bg-green-600 hover:bg-green-700">Log Your Plastic Usage</Button>
-            </Link> */}
-            <Button onClick={() => {
-              signIn('google', { callbackUrl: '/dashboard' })
-            }}>
-              login
-            </Button>
-            <Button variant="outline" className="text-green-600 border-green-600 hover:bg-green-100">Learn More</Button>
+            {session ? (
+              <Button
+                onClick={() => signOut()}
+                variant="outline"
+                className="text-green-300 border-green-300 hover:bg-green-700 hover:text-white transition-colors duration-300"
+              >
+                Logout
+              </Button>
+            ) : (
+              <Button
+                onClick={() => signIn('google', { callbackUrl: '/dashboard' })}
+                variant="outline"
+                className="text-green-300 border-green-300 hover:bg-green-700 hover:text-white transition-colors duration-300"
+              >
+                Login
+              </Button>
+            )}
+          </nav>
+        </header>
+
+        <main className="container mx-auto mt-20 px-4">
+          <section className="text-center">
+            <motion.div
+              className="mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <div className="max-w-3xl mx-auto">
+                <motion.h1
+                  className="text-5xl sm:text-6xl font-bold text-white leading-tight mb-6 drop-shadow-lg"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                >
+                  Your Path to a
+                  <br />
+                  <span className="text-green-300">Greener Future</span>
+                </motion.h1>
+                <motion.p
+                  className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto font-medium drop-shadow"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.6 }}
+                >
+                  Empower yourself to make a difference. Track, analyze, and reduce
+                  your plastic footprint with our intuitive web tool.
+                </motion.p>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.8 }}
+                >
+                  <Button
+                    onClick={() => signIn('google', { callbackUrl: '/dashboard' })}
+                    className="bg-green-400 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full text-lg transition-colors duration-300"
+                  >
+                    Get Started
+                  </Button>
+                </motion.div>
+              </div>
+            </motion.div>
+          </section>
+        </main>
+
+        <footer className=" mt-24 button sticky bg-green-400 bg-opacity-80 text-white py-6">
+          <div className="container mx-auto text-center">
+            <p>&copy; 2025 EcoTrack. All rights reserved.</p>
           </div>
-        </section>
-
-        <section className='mt-16 grid grid-cols-1 md:grid-cols-2 gap-8'>
-          <div className='bg-white p-6 rounded-lg shadow-md'>
-            <img
-              src='/image1.png'
-              alt='Wildlife in natural habitat'
-              width={100}
-              height={48}
-              className='w-full h-48 object-cover rounded-md mb-4'
-            />
-            <h3 className='text-2xl font-semibold text-green-700 mb-2'>
-              Protect Wildlife
-            </h3>
-            <p className='text-gray-600'>
-              Reducing plastic waste helps preserve natural habitats and
-              protects countless species from harm.
-            </p>
-          </div>
-          <div className='bg-white p-6 rounded-lg shadow-md'>
-            <img
-              src='/image2.png'
-              alt='Clean ecosystem'
-              className='w-full h-48 object-cover rounded-md mb-4'
-            />
-            <h3 className='text-2xl font-semibold text-green-700 mb-2'>
-              Preserve Ecosystems
-            </h3>
-            <p className='text-gray-600'>
-              By minimizing plastic pollution, we contribute to the health and
-              balance of entire ecosystems.
-            </p>
-          </div>
-        </section>
-      </main>
-
-      <footer className='mt-16 bg-green-600 text-white py-4'>
-        <div className='container mx-auto text-center'>
-          <p>&copy; 2025 EcoTrack. All rights reserved.</p>
-        </div>
-      </footer>
+        </footer>
+      </div>
     </div>
-  );
+  )
 }
+

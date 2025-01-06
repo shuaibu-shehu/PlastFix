@@ -17,7 +17,6 @@ import { signOut } from 'next-auth/react';
 
 const links = [
   {name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard},
-  {name: 'Log Usage', href: '/log', icon: Plus},
   {name: 'Reports', href: '/dashboard/reports', icon: BarChart3},
   {name: 'Resources', href: '/dashboard/resource', icon: BookOpen},
   {name: 'Tips', href: '/tips', icon: Leaf},
